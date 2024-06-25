@@ -2,7 +2,9 @@
   height: 60vh;
   overflow: scroll;
   border: 2px solid var(--letraLogo);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
   border-radius: 6px;
+  padding: 1rem 0;
 }
 
 .table-responsive {
@@ -17,7 +19,7 @@
 } */
 .table-title {
   color: var(--letraLogo);
-  padding: 16px 30px 0 30px;
+  padding: 16px 30px 5px 30px;
   min-width: 100%;
   margin: -20px -25px 10px;
   border-radius: 3px 3px 0 0;
@@ -26,6 +28,28 @@
   margin: 5px 0 0;
   font-size: 2rem;
 }
+
+.open-modal {
+  background: none;
+  display: block;
+  text-align: center;
+  font-size: 1.6rem;
+  font-weight: bolder;
+  border: 2px solid var(--letraLogo);
+  padding: 2px 6px;
+  outline: none;
+  color: var(--letraLogo);
+  border-radius: 12px;
+  transition: 0.25s;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.open-modal:hover {
+  background: var(--opion5);
+  color: var(--background);
+}
+
 table.table tr th,
 table.table tr td {
   padding: 5px 10px;

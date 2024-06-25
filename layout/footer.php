@@ -13,10 +13,10 @@
 </script>
 
 <!-- SCRIPTS -->
-<script src="../assets/js/logout.js" defer></script>
-<script src="../assets/js/loadContent.js"></script>
-<script src="../assets/js/manage_modals.js" defer></script>
-<script src="../assets/js/initDynamicContent.js" defer></script>
+<script src="../assets/js/content/logout.js" defer></script>
+<script src="../assets/js/content/loadContent.js"></script>
+<script src="../assets/js/content/manage_modals.js" defer></script>
+<script src="../assets/js/content/initDynamicContent.js" defer></script>
 
 </body>
 
