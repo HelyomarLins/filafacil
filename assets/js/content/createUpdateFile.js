@@ -7,7 +7,7 @@ function createUpdateFiles(form, urlAPI) {
             console.log("createUpdateFiles chamada!");
 
             // Desabilita o botão de submit para evitar envios duplicados
-            form.querySelector('button[type="submit"]').disabled = true;
+            form.querySelector('input[type="submit"]').disabled = true;
 
             const dadosFormulario = new FormData(form);
 
@@ -71,7 +71,7 @@ function createUpdateFiles(form, urlAPI) {
                 });
             } finally {
                 // Reativa o botão de submit após o processamento
-                form.querySelector('button[type="submit"]').disabled = false;
+                form.querySelector('input[type="submit"]').disabled = false;
             }
         });
     } else {

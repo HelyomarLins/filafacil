@@ -1,4 +1,5 @@
 function initDynamicContent() {
+    openModal('btnCriar', 'modalCriarFila');
 
 
 }
