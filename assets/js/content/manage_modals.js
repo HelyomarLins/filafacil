@@ -9,8 +9,8 @@ function openModal() {
     // Define um mapeamento de classes para IDs de modais
     const modalMap = {
 
-        //Deletar Acesso
-        'btnAccess': 'modalAcesso',
+        //Criar Fila
+        'btnCriar': 'modalCriarFila',
 
 
         //Acessar fila
@@ -46,9 +46,9 @@ function openModal() {
                         // Verifica o modal e o estado de seleção de usuários usando switch
 
                         switch (modalId) {
-                            case 'modalAcesso':
+                            case 'modalCriarFila':
 
-                                console.log('Abrindo o modal. Editar');
+                                console.log('Abrindo o modal. Criar');
                                 myModal.show();
 
                                 break;

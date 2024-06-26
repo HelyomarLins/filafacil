@@ -3,7 +3,7 @@ session_start();
 include_once('../../API/conexao.php');
 
 $erro = 0;
-
+$criador =  $_SESSION['nome_usu'];
 if ($_SESSION["logged_in"]) {
     $idCampo = $_SESSION["id_usu"];
 
@@ -20,7 +20,7 @@ if ($_SESSION["logged_in"]) {
         <div class="row">
             <div class="col-sm d-flex align-items-center justify-content-between">
                 <h2>Criar <b>Filas</b></h2>
-                <a href="#" id="btnCadastro" class="open-modal btnCadUsu">
+                <a href="#" id="btnCadastro" class="open-modal btnCriar">
                     <i class='bx bxs-plus-circle'></i><span>Criar</span>
                 </a>
             </div>
@@ -45,7 +45,7 @@ if ($_SESSION["logged_in"]) {
                         echo "<td>" . $row["qtd_fila"] . "</td>";
                         echo "<td>" . $row["posicao_fila"] . "</td>"; // Exibindo a posição
                         echo "<td>";
-                        echo "<a href='#' class='edit open-modal btnEditeUsu' data-id='" . $row["id_criar_fila"] . "' onclick=\"loadAccess('/Fila_Facil/system/filas/accessFila1.php?id_criar_fila=" . $row["id_criar_fila"] . "')\">";
+                        echo "<a href='#' class='edit open-modal btnCriar' data-id='" . $row["id_criar_fila"] . "' onclick=\"loadAccess('/Fila_Facil/system/filas/accessFila1.php?id_criar_fila=" . $row["id_criar_fila"] . "')\">";
                         echo "<i class='bx bxs-pencil' data-toggle='tooltip' title='Acessar'></i>";
                         echo "</a>";
                         echo "</td>";
@@ -68,6 +68,46 @@ if ($_SESSION["logged_in"]) {
     echo "Usuário não está logado.";
 }
 ?>
+
+<!-- Modal CRIAR FILA -->
+<div class="modal fade" id="modalCriarFila" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="POST" id="cadLoginUsers" class="needs-validation box" novalidate name="form">
+                <div class="modal-header">
+                    <img src="./assets/img/Screenshot_4.png" alt="">
+                </div>
+                <div class="modal-body">
+                    <input type="text" class="form-control" id="id_criar_fila" name="id_criar_fila">
+
+                    <input type="text" name="nome_fila" placeholder="Nome" class="form-control" required>
+                    <div class="invalid-feedback">Preencha o nome da fila.</div>
+
+                    <input type="number" name="qtd_fila" placeholder="Quantidade" class="form-control" required>
+                    <div class="invalid-feedback">Preencha o quantidade da fila.</div>
+
+                    <input type="date" name="data_inicio_fila" placeholder="Início da fila" class="form-control">
+                    <div class="invalid-feedback">Data de início da vila.</div>
+
+                    <input type="password" name="cod_acess_fila" placeholder="Codigo de acesso" class="form-control"
+                        autocomplete="curent-password" required>
+                    <div class="invalid-feedback">Digite o código para acesso.</div>
+
+                    <input id="btnCloseModal" type="submit" name="" value="Cadastrar" href="#">
+                </div>
+
+                <div class="modal-footer">
+                    <p class=text-muted>
+                        <a href="#" onclick="logout()">SAIR<i class="fa-solid fa-arrow-right-from-bracket"></i></a>
+                    </p>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
 
 <!-- Modal ACESSO -->
 <div class="modal fade" id="modalAcesso" tabindex="-1" aria-hidden="true">
