@@ -43,7 +43,9 @@
 .box input[type="text"],
 .box input[type="password"],
 .box input[type="email"],
-.box input[type="tel"] {
+.box input[type="tel"],
+.box input[type="number"],
+.box input[type="date"] {
   background: none;
   margin-bottom: 1rem;
   display: block;
@@ -61,7 +63,9 @@
 .box input[type="text"]::placeholder,
 .box input[type="password"]::placeholder,
 .box input[type="email"]::placeholder,
-.box input[type="tel"]::placeholder {
+.box input[type="tel"]::placeholder,
+.box input[type="number"]::placeholder,
+.box input[type="date"]::placeholder {
   color: var(--letraLogo);
 }
 

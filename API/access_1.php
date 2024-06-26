@@ -13,7 +13,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         $tabela = clear_input($conexao, $_POST['tabela']);
         $idCampo = clear_input($conexao, $_POST['idCampo']);
-        $idValor = clear_input($conexao, $_POST['id_usu']); // Usar id_usu diretamente
+        // Usar id_usu diretamente
+        $idValor = clear_input($conexao, $_POST['id_usu']);
+
         unset($_POST['tabela'], $_POST['idCampo'], $_POST['id_usu']);
 
         $sql = "UPDATE $tabela SET ";
@@ -52,8 +54,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($stmt->execute()) {
             $response = [
-                'redirect' => '/sidebar-01/sistema/usuario/listarUsuarios.php',
-                'message' => 'Usuário editado com sucesso',
+                'redirect' => '/Fila_Facil/system/usuario/listarFilasUsu.php',
+                'message' => 'Fila Cadastrada',
                 'icon' => 'success'
             ];
         } else {

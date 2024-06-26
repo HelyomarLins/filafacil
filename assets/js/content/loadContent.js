@@ -12,10 +12,10 @@ function loadContent(url) {
             container.innerHTML = this.responseText;
 
             // Chama funções de inicialização após o conteúdo ser carregado
-            initDynamicContent();
 
 
         }
+        openModal('btnCriar', 'modalCriarFila');
     };
     xhttp.open("GET", url, true);
     xhttp.send();
