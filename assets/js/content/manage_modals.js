@@ -1,92 +1,60 @@
-console.log('Modais internos carregada');
+// JavaScript para abrir o modal e carregar os dados da fila
+document.addEventListener('DOMContentLoaded', function () {
+    const modalUtils = {
+        modais: {} // Objeto para armazenar as instâncias dos modais
+    };
 
-// Define o objeto modalUtils no escopo global
-const modalUtils = {
-    modais: {} // Objeto para armazenar as instâncias dos modais
-};
-// Função para abrir o modal com base na classe do elemento clicado
-function openModal() {
-    // Define um mapeamento de classes para IDs de modais
     const modalMap = {
-
-        //Criar Fila
-        'btnCriar': 'modalCriarFila',
-
-
-        //Acessar fila
-        'btnDelete': 'modalDelete',
-
-
+        // Mapeamento de classes de botões para IDs de modais
+        'btnEditar': 'modalEditarFila', // Exemplo: btnEditar mapeado para modalEditarFila
+        // Adicione mais mapeamentos conforme necessário
     };
 
     document.querySelectorAll('.open-modal').forEach(element => {
         element.addEventListener('click', () => {
-            console.log('Elemento clicado:', element);
-
-            // Itera pelas classes do elemento
             for (const className of element.classList) {
-                // Verifica se a classe está no mapeamento
-                if (className in modalMap) {
+                if (modalMap[className]) {
                     const modalId = modalMap[className];
-                    console.log(`Abrindo modal "${modalId}"`);
-
-                    // Abre o modal com o ID determinado
                     const modalElement = document.getElementById(modalId);
+
                     if (modalElement) {
-                        // Verifica se o modal já foi instanciado
                         let myModal = modalUtils.modais[modalId];
                         if (!myModal) {
-                            // Instancia o modal se necessário
                             myModal = new bootstrap.Modal(modalElement);
-
-                            // Armazena a instância
                             modalUtils.modais[modalId] = myModal;
                         }
 
-                        // Verifica o modal e o estado de seleção de usuários usando switch
+                        // Obtém o ID da fila a partir do botão clicado
+                        const filaId = element.getAttribute('data-id');
 
-                        switch (modalId) {
-                            case 'modalCriarFila':
-
-                                console.log('Abrindo o modal. Criar');
-                                myModal.show();
-
-                                break;
-
-                            case 'modalDelete':
-                                // Atualizar o conteúdo do modalDelete com o nome do usuário selecionado
-                                selectUserId = element.dataset.id;
-                                selectUserNome = element.dataset.nome;
-                                console.log(`Nome do usuário "${selectUserNome}"`);
-                                console.log(`Id do usuário "${selectUserId}"`);
-                                if (modalElement) {
-                                    const nomeUsuarioElement = modalElement.querySelector('.nome-delete');
-
-                                    if (nomeUsuarioElement && selectUserNome) {
-                                        nomeUsuarioElement.textContent = selectUserNome;
-
-                                        // Abrir o modalDelete se um usuário estiver selecionado
-                                        myModal.show();
-                                    } else {
-                                        console.error('Nome do usuário ou elemento nome-delete não encontrados.');
-                                    }
-                                } else {
-                                    console.error('Elemento modalDelete não encontrado.');
+                        // Chamada AJAX para buscar os detalhes da fila
+                        console.log('enviando dados para api');
+                        fetch(`detalhes_fila.php?id_criar_fila=${filaId}`)
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error('Erro na requisição: ' + response.status);
                                 }
-                                break;
+                                return response.json();
+                            })
+                            .then(data => {
+                                // Preencher os campos do modal com os dados retornados
+                                document.getElementById('nome_fila').value = data.nome_fila;
+                                document.getElementById('qtd_fila').value = data.qtd_fila;
+                                document.getElementById('data_inicio_fila').value = data.data_inicio_fila;
+                                document.getElementById('cod_acess_fila').value = data.cod_acess_fila;
 
-
-                            default:
-                                console.error(`Elemento modal com ID "${modalId}" não encontrado!`);
-                        }
-
+                                // Abrir o modal após carregar os dados
+                                myModal.show();
+                            })
+                            .catch(error => console.error('Erro ao carregar dados da fila:', error));
+                        alert('Erro ao carregar dados da fila, tente novamdnte');
                     } else {
                         console.error(`Elemento modal com ID "${modalId}" não encontrado!`);
                     }
-                    // Sai do loop após encontrar a classe correspondente
-                    break;
+
+                    break; // Sai do loop após encontrar a classe correspondente
                 }
             }
         });
     });
-}
+});

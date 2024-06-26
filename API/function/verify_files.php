@@ -1,16 +1,17 @@
 <?php
+// verify_files.php
 
 function verifyFiles($codAccess, $nome)
 {
     global $conexao;
 
-    // Prepara a consulta para verificar o nome da fila
-    $stmt = $conexao->prepare("SELECT cod_acess_fila FROM criarfila WHERE nome_fila = ?");
+    // Prepara a consulta para verificar se há registros com o mesmo nome ou código de acesso
+    $stmt = $conexao->prepare("SELECT cod_acess_fila FROM criarfila WHERE nome_fila = ? OR cod_acess_fila = ?");
     if ($stmt === false) {
         return false;
     }
 
-    $stmt->bind_param("s", $nome);
+    $stmt->bind_param("ss", $nome, $codAccess);
     $stmt->execute();
     if ($stmt->errno) {
         return false;
@@ -18,23 +19,11 @@ function verifyFiles($codAccess, $nome)
 
     $stmt->store_result();
     if ($stmt->num_rows > 0) {
-        $stmt->bind_result($codAccessHashedDB);
-        $stmt->fetch();
-
-        // Verifica se o código de acesso fornecido corresponde ao hash no banco
-        $codigo_exist = $codAccessHashedDB !== null && password_verify($codAccess, $codAccessHashedDB);
-
         $stmt->close();
 
-        return array(
-            'codigo_exist' => $codigo_exist,
-            'nome_exist' => true
-        );
+        return true; // Retorna verdadeiro se encontrar algum registro com o mesmo nome ou código de acesso
     } else {
         $stmt->close();
-        return array(
-            'codigo_exist' => false,
-            'nome_exist' => false
-        );
+        return false; // Retorna falso se nenhum registro for encontrado
     }
 }

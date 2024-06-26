@@ -1,5 +1,6 @@
 function initDynamicContent() {
-    openModal('btnCriar', 'modalCriarFila');
+    openModal('btnCriar', 'modalCriarFila', 'btnEditar', 'modalEditarFila');
+
 
 
 }

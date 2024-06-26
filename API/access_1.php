@@ -44,14 +44,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Caso contrário, é uma operação de criação (INSERT)
             $codAccess = clear_input($conexao, $_POST['cod_acess_fila']);
             $nome = clear_input($conexao, $_POST['nome_fila']);
-
-            // Hashear o código de acesso antes de inserir no banco de dados
-            $codAccessHashed = criarHash($codAccess);
+            $qtd_fila = clear_input($conexao, $_POST['qtd_fila']);
+            $pessoa_idUsu = clear_input($conexao, $_POST['pessoa_idUsu']);
 
             // Verificar se já existe uma fila com o mesmo código de acesso ou nome
-            $exists = verifyFiles($codAccess, $nome); // Passar o código de acesso original para verificar
+            $exists = verifyFiles($codAccess, $nome); // Verifica se o nome ou o código de acesso já existem
 
-            if ($exists['codigo_exist'] || $exists['nome_exist']) {
+            if ($exists) {
                 // Fila com o mesmo código de acesso ou nome já existe
                 $response = [
                     'message' => 'A fila já existe. Criar outra.',
@@ -59,64 +58,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ];
                 http_response_code(400); // Bad Request
             } else {
+                // Hashear o código de acesso antes de inserir no banco de dados
+                $codAccessHashed = criarHash($codAccess);
+
                 // Preparar a query de INSERT
-                $sql = "INSERT INTO $tabela (";
-                $campos = [];
-                $valores = [];
+                $sql = "INSERT INTO $tabela (pessoa_idUsu, nome_fila, qtd_fila, cod_acess_fila) VALUES (?, ?, ?, ?)";
 
-                foreach ($_POST as $campo => $valor) {
-                    $campo = clear_input($conexao, $campo);
-                    $valores[] = "?";
-
-                    if ($campo === 'cod_acess_fila') {
-                        // Se for o campo 'cod_acess_fila', aplicar a função de hash
-                        $valor = $codAccessHashed; // Usar o hash que foi gerado
-                    } else {
-                        $valor = clear_input($conexao, $valor);
-                    }
-                    $campos[] = $campo;
+                // Preparar a declaração SQL
+                $stmt = $conexao->prepare($sql);
+                if ($stmt === false) {
+                    throw new Exception('Erro ao preparar a declaração: ' . $conexao->error);
                 }
 
-                $sql .= implode(", ", $campos);
-                $sql .= ") VALUES (";
-                $sql .= implode(", ", $valores);
-                $sql .= ")";
-            }
-        }
+                // Vincular os parâmetros da query preparada
+                $stmt->bind_param("isss", $pessoa_idUsu, $nome, $qtd_fila, $codAccessHashed);
 
-        // Executar a query SQL se a resposta ainda não foi definida
-        if (empty($response)) {
-            // Preparar a declaração SQL
-            $stmt = $conexao->prepare($sql);
-            if ($stmt === false) {
-                throw new Exception('Erro ao preparar a declaração: ' . $conexao->error);
-            }
-
-            // Vincular os parâmetros da query preparada
-            $types = str_repeat('s', count($_POST)); // 's' para string
-            $params = array_values($_POST);
-            $stmt->bind_param($types, ...$params);
-
-            // Executar a query SQL preparada
-            if ($stmt->execute()) {
-                if ($isUpdate) {
-                    $response = [
-                        'redirect' => '/Fila_Facil/system/usuario/listarFilasUsu.php',
-                        'message' => 'Fila atualizada com sucesso',
-                        'icon' => 'success'
-                    ];
-                } else {
+                // Executar a query SQL preparada
+                if ($stmt->execute()) {
                     $response = [
                         'redirect' => '/Fila_Facil/system/usuario/listarFilasUsu.php',
                         'message' => 'Fila criada com sucesso',
                         'icon' => 'success'
-                    ];
-                }
-            } else {
-                if ($isUpdate) {
-                    $response = [
-                        'message' => 'Erro ao atualizar a fila. Tente novamente',
-                        'icon' => 'error'
                     ];
                 } else {
                     $response = [
@@ -124,9 +86,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         'icon' => 'error'
                     ];
                 }
-            }
 
-            $stmt->close();
+                $stmt->close();
+            }
         }
     } catch (Exception $e) {
         // Capturar e tratar exceções

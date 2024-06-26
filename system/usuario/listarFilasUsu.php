@@ -13,6 +13,8 @@ if ($_SESSION["logged_in"]) {
     $sql = "SELECT * FROM criarfila WHERE pessoa_idUsu = '$idCampo'";
     $resultado = mysqli_query($conexao, $sql);
 
+    // Inicializa um array na sessão para armazenar os IDs das filas
+    $_SESSION['filas_ids'] = [];
 ?>
 <!-- ## MONTAGEM DA TABELA ## -->
 <div class="container">
@@ -45,11 +47,14 @@ if ($_SESSION["logged_in"]) {
                         echo "<td>" . $row["qtd_fila"] . "</td>";
                         echo "<td>" . $row["posicao_fila"] . "</td>"; // Exibindo a posição
                         echo "<td>";
-                        echo "<a href='#' class='edit open-modal btnCriar' data-id='" . $row["id_criar_fila"] . "' onclick=\"loadContent('/Fila_Facil/system/filas/accessFila1.php?id_criar_fila=" . $row["id_criar_fila"] . "')\">";
+                        echo "<a href='#' class='edit open-modal btnEditar' data-id='"  . $row["id_criar_fila"] . "')\">";
                         echo "<i class='bx bxs-pencil' data-toggle='tooltip' title='Acessar'></i>";
                         echo "</a>";
                         echo "</td>";
                         echo "</tr>";
+
+                        // Armazenar os IDs das filas na sessão
+                        $_SESSION['filas_ids'][] = $row['id_criar_fila'];
                     }
                 } else {
                     // Exibir linha vazia se não houver resultados

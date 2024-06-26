@@ -14,7 +14,7 @@ if (isset($_GET['id_criar_fila'])) {
     // Armazenar os dados do banco em variáveis
     $criador =  $banco['pessoa_idUsu'];
     $nome =     $banco['nome_fila'];
-    $email =    $banco['qtd_fila'];
+    $email =    $banco['email_chamada'];
     $abertura = $banco['data_inicio_fila'];
     $qtd =      $banco['qtd_fila'];
     $posicao =  $banco['posicao_fila'];
@@ -23,8 +23,7 @@ if (isset($_GET['id_criar_fila'])) {
 }
 ?>
 <div class="container">
-    <form id="accessFila1Form" class="form" name="form" method="POST"
-        onsubmit="updateAccessEdit(this, '/Fila_Facil/API/cad_access_fila1.php'); return false;">
+    <form id="accessFila1Form" class="form" name="form" method="POST" onsubmit="updateAccessEdit(this, '/Fila_Facil/API/cad_access_fila1.php'); return false;">
 
         <div class="modal-header">
             <h4 class="modal-title">Acessar Fila</h4>
@@ -36,27 +35,23 @@ if (isset($_GET['id_criar_fila'])) {
         <div class="row">
             <div class="col-md-6">
                 <label for="pessoa_idUsu" class="form-label">Criador</label>
-                <input type="text" class="form-control" id="pessoa_idUsu" name="pessoa_idUsu"
-                    value="<?php echo $criador ?>" readonly>
+                <input type="text" class="form-control" id="pessoa_idUsu" name="pessoa_idUsu" value="<?php echo $criador ?>" readonly>
             </div>
             <div class="col-md-6">
                 <label for="nome_fila" class="form-label">Fila</label>
-                <input type="text" class="form-control" id="nome_fila" name="nome_fila" value="<?php echo $nome ?>"
-                    readonly>
+                <input type="text" class="form-control" id="nome_fila" name="nome_fila" value="<?php echo $nome ?>" readonly>
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-2">
                 <label for="data_inicio_fila" class="form-label">Início</label>
-                <input type="text" class="form-control" id="data_inicio_fila" name="data_inicio_fila"
-                    value="<?php echo $abertura ?>" readonly>
+                <input type="text" class="form-control" id="data_inicio_fila" name="data_inicio_fila" value="<?php echo $abertura ?>" readonly>
             </div>
 
             <div class="col-md-2">
                 <label for="qtd_fila" class="form-label">QTD:</label>
-                <input type="text" class="form-control" id="qtd_fila" name="qtd_fila" autocomplete="email"
-                    value="<?php echo $qtd ?>" readonly>
+                <input type="text" class="form-control" id="qtd_fila" name="qtd_fila" autocomplete="email" value="<?php echo $qtd ?>" readonly>
             </div>
 
             <!-- Dados do Acesso -->
@@ -80,8 +75,7 @@ if (isset($_GET['id_criar_fila'])) {
         <div class="row">
             <div class="col-md-2">
                 <label for="ultima_posicao" class="form-label">Posição atual:</label>
-                <input type="text" class="form-control" id="ultima_posicao" name="ultima_posicao"
-                    autocomplete="current-password" value="<?php echo $posicao ?>" readonly>
+                <input type="text" class="form-control" id="ultima_posicao" name="ultima_posicao" autocomplete="current-password" value="<?php echo $posicao ?>" readonly>
             </div>
         </div>
         <div class="row">
