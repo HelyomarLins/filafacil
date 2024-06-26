@@ -1,4 +1,6 @@
 <?php
+// access_1.php
+
 ob_start();
 session_start();
 header('Content-Type: application/json');
@@ -6,16 +8,18 @@ header('Content-Type: application/json');
 // Incluindo arquivos de conexão
 include_once('conexao.php');
 include_once('./function/clear_input.php');
-include_once('./API/function/criar_hash.php');
-
+include_once('./function/criar_hash.php');
+include_once('./function/verify_files.php');
 $response = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         // Limpar e obter variáveis
         $tabela = clear_input($conexao, $_POST['tabela']);
-        $idCampo = clear_input($conexao, $_POST['idCampo']); // Pode não ser usado no INSERT
-        $idValor = clear_input($conexao, $_POST['id_usu']); // Usar diretamente para edição, se necessário
+
+        // Verificar se os campos existem antes de acessá-los
+        $idCampo = isset($_POST['idCampo']) ? clear_input($conexao, $_POST['idCampo']) : null;
+        $idValor = isset($_POST['id_usu']) ? clear_input($conexao, $_POST['id_usu']) : null;
 
         // Remover variáveis do $_POST que não são campos de dados
         unset($_POST['tabela'], $_POST['idCampo'], $_POST['id_usu']);
@@ -43,7 +47,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $sql .= implode(", ", $campos);
             $sql .= " WHERE $idCampo = ?";
         } else {
+
             // Caso contrário, é uma operação de criação (INSERT)
+            $codAccess = clear_input($conexao, $_POST['cod_acess_fila']);
+            $nome = clear_input($conexao, $_POST['nome_fila']);
+
+            // Verificar se já existe uma fila com o mesmo código de acesso ou nome
+            $exists = verifyFiles($codAccess, $nome);
+
+            if ($exists['codigo_exist'] || $exists['nome_exist']) {
+
+                // Fila com o mesmo código de acesso ou nome já existe
+                $response = [
+                    'message' => 'A fila já existe. Criar outra.',
+                    'icon' => 'error'
+                ];
+                http_response_code(400); // Bad Request
+                echo json_encode($response);
+                exit;
+            }
+
+            // Preparar a query de INSERT
             $sql = "INSERT INTO $tabela (";
             $campos = [];
             $valores = [];

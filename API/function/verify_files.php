@@ -1,5 +1,5 @@
 <?php
-function verifyUsers($codAccess, $nome)
+function verifyFiles($codAccess, $nome)
 {
     // Torna a variável $conexao, definida no arquivo conexao.php, acessível dentro desta função.
     global $conexao;
@@ -7,13 +7,13 @@ function verifyUsers($codAccess, $nome)
     /* - Prepara as queries para evitar SQL injection - */
 
     // Utiliza placeholders (?) para os valores que serão inseridos posteriormente.
-    $sql_codAccess = $conexao->prepare("SELECT COUNT(*) FROM filafacil WHERE cod_acess_fila = ?");
-    $sql_nome = $conexao->prepare("SELECT COUNT(*) FROM filafacil WHERE nome_fila = ?");
+    $sql_codAccess = $conexao->prepare("SELECT COUNT(*) FROM criarfila WHERE cod_acess_fila = ?");
+    $sql_nome = $conexao->prepare("SELECT COUNT(*) FROM criarfila WHERE nome_fila = ?");
 
     /* - Executa a query para o email - */
 
     // Associa o valor do parâmetro $codAccess ao placeholder da query $sql_codAccess.
-    $sql_codAccess->bind_param("s", $codAceess);
+    $sql_codAccess->bind_param("s", $codAccess);
 
     // Executa a query preparada.
     $sql_codAccess->execute();
