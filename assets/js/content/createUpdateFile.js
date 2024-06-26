@@ -1,3 +1,4 @@
+/* == CRIAR FILAS == */
 console.log('Função createUpdateFiles carregada');
 
 function createUpdateFiles(form, urlAPI) {
@@ -6,7 +7,8 @@ function createUpdateFiles(form, urlAPI) {
     // Desabilita o botão de submit para evitar envios duplicados
     form.querySelector('input[type="submit"]').disabled = true;
 
-    const dadosFormulario = new FormData(form); // Cria um objeto FormData com os dados do formulário
+    // Cria um objeto FormData com os dados do formulário
+    const dadosFormulario = new FormData(form);
 
     fetch(urlAPI, {
         method: "POST",
@@ -15,7 +17,8 @@ function createUpdateFiles(form, urlAPI) {
         .then(response => {
             console.log('Resposta completa da API:', response);
             if (response.ok) {
-                return response.json(); // Converte a resposta da API (JSON) para um objeto JavaScript
+                // Converte a resposta da API (JSON) para um objeto JavaScript
+                return response.json();
             } else {
                 return response.json().then(errorData => {
                     throw new Error(errorData.message || 'Erro ao cadastrar. Tente novamente.');
@@ -82,11 +85,21 @@ function closeModalCad() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    const formulario = document.querySelector("#cadLoginUsers");
-    if (formulario) {
-        formulario.addEventListener('submit', function (e) {
+    const createForm = document.querySelector("#createFilesUser");
+    const editForm = document.querySelector("#editFilesUser");
+
+    if (createForm) {
+        createForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            createUpdateFiles(this, '/Fila_Facil/API/access_1.php');
+        });
+    }
+
+    if (editForm) {
+        editForm.addEventListener('submit', function (e) {
             e.preventDefault();
             createUpdateFiles(this, '/Fila_Facil/API/access_1.php');
         });
     }
 });
+

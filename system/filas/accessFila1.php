@@ -14,7 +14,6 @@ if (isset($_GET['id_criar_fila'])) {
     // Armazenar os dados do banco em variáveis
     $criador =  $banco['pessoa_idUsu'];
     $nome =     $banco['nome_fila'];
-    $email =    $banco['email_chamada'];
     $abertura = $banco['data_inicio_fila'];
     $qtd =      $banco['qtd_fila'];
     $posicao =  $banco['posicao_fila'];
