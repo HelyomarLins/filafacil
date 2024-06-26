@@ -35,17 +35,14 @@
     <div class="modal fade" id="modalCriarFila" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form method="POST" id="cadLoginUsers" class="needs-validation box" novalidate name="form"
-                    onsubmit="createUpdateFiles(this, '/Fila_Facil/API/access_1.php'); return false;">
+                <form method="POST" id="cadLoginUsers" class="needs-validation box" novalidate>
                     <div class="modal-header">
                         <img src="./assets/img/Screenshot_4.png" alt="">
                     </div>
                     <div class="modal-body">
-
                         <!--DADOS PARA CADASTRAR NA TABELA-->
-                        <input type="hidden" value="editar">
                         <input type="hidden" name="tabela" value="criarfila">
-                        <input type="text" class="form-control" id="pessoa_idUsu" name="pessoa_idUsu"
+                        <input type="hidden" id="pessoa_idUsu" name="pessoa_idUsu"
                             value="<?php echo isset($_SESSION['id_usu']) ? $_SESSION['id_usu'] : ''; ?>">
 
                         <input type="text" name="nome_fila" placeholder="Nome" class="form-control" required>
@@ -55,10 +52,10 @@
                         <div class="invalid-feedback">Preencha a quantidade da fila.</div>
 
                         <input type="password" name="cod_acess_fila" placeholder="Codigo de acesso" class="form-control"
-                            autocomplete="curent-password" required>
+                            autocomplete="current-password" required>
                         <div class="invalid-feedback">Digite o código para acesso.</div>
 
-                        <input id="btnCloseModal" type="submit" name="" value="Cadastrar" href="#">
+                        <input id="btnCloseModal" type="submit" value="Cadastrar">
                     </div>
 
                     <div class="modal-footer">
@@ -70,6 +67,7 @@
             </div>
         </div>
     </div>
+
 
 
 

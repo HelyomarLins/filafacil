@@ -1,9 +1,8 @@
 <?php
-$senha = '111';
-$hashArmazenado = '$2y$12$Mti2pTZoQj3pYi/9dHGLNerlt4wIguwjx60.GOamxY3arvTFsqx0m'; // Hash armazenado no banco
 
-if (password_verify($senha, $hashArmazenado)) {
-    echo "Senha verificada com sucesso.";
-} else {
-    echo "Falha na verificação da senha.";
-}
+include_once('./function/criar_hash.php'); // Inclui a função
+
+$codigoAcesso = "12345"; // Código de acesso que você quer hashear
+$hash = criarHash($codigoAcesso);
+
+echo "Hash do código de acesso '$codigoAcesso': $hash\n";

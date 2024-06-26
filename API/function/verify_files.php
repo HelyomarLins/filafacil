@@ -1,45 +1,40 @@
 <?php
+
 function verifyFiles($codAccess, $nome)
 {
-    // Torna a variável $conexao, definida no arquivo conexao.php, acessível dentro desta função.
     global $conexao;
 
-    /* - Prepara as queries para evitar SQL injection - */
+    // Prepara a consulta para verificar o nome da fila
+    $stmt = $conexao->prepare("SELECT cod_acess_fila FROM criarfila WHERE nome_fila = ?");
+    if ($stmt === false) {
+        return false;
+    }
 
-    // Utiliza placeholders (?) para os valores que serão inseridos posteriormente.
-    $sql_codAccess = $conexao->prepare("SELECT COUNT(*) FROM criarfila WHERE cod_acess_fila = ?");
-    $sql_nome = $conexao->prepare("SELECT COUNT(*) FROM criarfila WHERE nome_fila = ?");
+    $stmt->bind_param("s", $nome);
+    $stmt->execute();
+    if ($stmt->errno) {
+        return false;
+    }
 
-    /* - Executa a query para o email - */
+    $stmt->store_result();
+    if ($stmt->num_rows > 0) {
+        $stmt->bind_result($codAccessHashedDB);
+        $stmt->fetch();
 
-    // Associa o valor do parâmetro $codAccess ao placeholder da query $sql_codAccess.
-    $sql_codAccess->bind_param("s", $codAccess);
+        // Verifica se o código de acesso fornecido corresponde ao hash no banco
+        $codigo_exist = $codAccessHashedDB !== null && password_verify($codAccess, $codAccessHashedDB);
 
-    // Executa a query preparada.
-    $sql_codAccess->execute();
+        $stmt->close();
 
-    // Obtém o resultado da query.
-    $sql_codAccess->store_result();
-    $sql_codAccess->bind_result($resultado_codAccess);
-    $sql_codAccess->fetch();
-
-    /* - Executa a query para o nome de usuário - */
-
-    $sql_nome->bind_param("s", $nome);
-    $sql_nome->execute();
-
-    // Obtém o resultado da query.
-    $sql_nome->store_result();
-    $sql_nome->bind_result($resultado_nome);
-    $sql_nome->fetch();
-
-    // Fecha as statements
-    $sql_codAccess->close();
-    $sql_nome->close();
-
-    // Retorna um array com os resultados.
-    return array(
-        'codigo_exist' => $resultado_codAccess > 0,
-        'nome_exist' => $resultado_nome > 0
-    );
+        return array(
+            'codigo_exist' => $codigo_exist,
+            'nome_exist' => true
+        );
+    } else {
+        $stmt->close();
+        return array(
+            'codigo_exist' => false,
+            'nome_exist' => false
+        );
+    }
 }
