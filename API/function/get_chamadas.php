@@ -1,5 +1,5 @@
 <?php
-include_once('./API/conexao.php');
+include_once('../conexao.php');
 
 $sql = "SELECT * FROM filas_chamada WHERE atendido = 'não'";
 $result = $conexao->query($sql);
@@ -11,5 +11,6 @@ if ($result->num_rows > 0) {
     }
 }
 
+header('Content-Type: application/json');
 echo json_encode($chamadas);
 $conexao->close();

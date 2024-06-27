@@ -1,23 +1,15 @@
-<!DOCTYPE html>
-<html lang="pt-br">
+<div class="container mt-5">
+    <h1>Fila de Chamadas</h1>
+    <ul id="chamadas-list" class="list-group"></ul>
+</div>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Filas Chamada</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-</head>
-
-<body>
-    <div class="container mt-5">
-        <h1>Fila de Chamadas</h1>
-        <ul id="chamadas-list" class="list-group"></ul>
-    </div>
-
-    <script>
-        async function fetchChamadas() {
+<script>
+    async function fetchChamadas() {
+        try {
             const response = await fetch('/Fila_Facil/API/function/get_chamadas.php');
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
             const chamadas = await response.json();
             const chamadasList = document.getElementById('chamadas-list');
             chamadasList.innerHTML = '';
@@ -28,60 +20,78 @@
                 listItem.onclick = () => handleChamada(chamada);
                 chamadasList.appendChild(listItem);
             });
-        }
-
-        function handleChamada(chamada) {
-            const swalWithBootstrapButtons = Swal.mixin({
-                customClass: {
-                    confirmButton: "btn btn-success",
-                    cancelButton: "btn btn-danger"
-                },
-                buttonsStyling: false
-            });
-            swalWithBootstrapButtons.fire({
-                title: `${chamada.nome_chamada}\n ${chamada.posicao_chamada}`,
-                text: `${chamada.nome_fila_chamada}`,
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: "Atendido!",
-                cancelButtonText: "Não!",
-                reverseButtons: true
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    updateAtendimento(chamada.id_chamada, 'sim');
-                    swalWithBootstrapButtons.fire({
-                        title: "Atendido!",
-                        text: "Atendimento fechado com sucesso!",
-                        icon: "success"
-                    });
-                } else if (
-                    result.dismiss === Swal.DismissReason.cancel
-                ) {
-                    updateAtendimento(chamada.id_chamada, 'não');
-                    swalWithBootstrapButtons.fire({
-                        title: "Não atendido!",
-                        text: "Atendimento pendente!",
-                        icon: "warning"
-                    });
-                }
+        } catch (error) {
+            console.error('Erro ao buscar chamadas:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Erro ao carregar chamadas',
+                text: error.message
             });
         }
+    }
 
-        async function updateAtendimento(id_chamada, atendido) {
+    function handleChamada(chamada) {
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: "btn btn-success",
+                cancelButton: "btn btn-danger"
+            },
+            buttonsStyling: false
+        });
+        swalWithBootstrapButtons.fire({
+            title: `${chamada.nome_chamada}\n ${chamada.posicao_chamada}`,
+            text: `${chamada.nome_fila_chamada}`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: "Atendido!",
+            cancelButtonText: "Não!",
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                updateAtendimento(chamada.id_chamada, 'sim');
+                swalWithBootstrapButtons.fire({
+                    title: "Atendido!",
+                    text: "Atendimento fechado com sucesso!",
+                    icon: "success"
+                });
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                updateAtendimento(chamada.id_chamada, 'não');
+                swalWithBootstrapButtons.fire({
+                    title: "Não atendido!",
+                    text: "Atendimento pendente!",
+                    icon: "warning"
+                });
+            }
+        });
+    }
+
+    async function updateAtendimento(id_chamada, atendido) {
+        try {
             const formData = new FormData();
             formData.append('id_chamada', id_chamada);
             formData.append('atendido', atendido);
 
-            await fetch('/Fila_Facil/API/function/update_atendimento.php', {
+            const response = await fetch('/Fila_Facil/API/function/update_atendimento.php', {
                 method: 'POST',
                 body: formData
             });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            const result = await response.text();
+            console.log('Update result:', result);
             fetchChamadas();
+        } catch (error) {
+            console.error('Erro ao atualizar atendimento:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Erro ao atualizar atendimento',
+                text: error.message
+            });
         }
+    }
 
-        fetchChamadas();
-    </script>
-    <script src="./accessAlert.js"></script>
-</body>
-
-</html>
+    document.addEventListener('DOMContentLoaded', fetchChamadas);
+</script>

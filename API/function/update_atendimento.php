@@ -1,5 +1,6 @@
 <?php
-include_once ('./API/conexao.php');
+include_once('../conexao.php');
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id_chamada = $_POST['id_chamada'] ?? null;
     $atendido = $_POST['atendido'] ?? null;
@@ -24,3 +25,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 mysqli_close($conexao);
+?>

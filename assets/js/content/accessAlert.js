@@ -1,4 +1,5 @@
 //accesAlert.js
+console.log('accessAlert carregada');
 ToastSucesso = Swal.mixin({
     toast: true,
     position: "top-end",
