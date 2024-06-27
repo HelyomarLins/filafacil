@@ -2,27 +2,35 @@
 session_start();
 include_once('../../API/conexao.php');
 
-// Verifica se o usuário está logado
-if (isset($_SESSION['nome_chamda']) && isset($_SESSION['tel_chamada'])) {
-    $usuAccess = $_SESSION['nome_chamda'];
-    $telAccess = $_SESSION["tel_chamada"];
+// Verifica se as variáveis do POST estão setadas
+if (isset($_POST['nome_chamada']) && isset($_POST['tel_chamada'])) {
+    // Obtém os dados do formulário
+    $usuAccess = $_POST['nome_chamada'];
+    $telAccess = $_POST['tel_chamada'];
 
     // Escapar as variáveis para evitar injeção de SQL
     $usuAccess = mysqli_real_escape_string($conexao, $usuAccess);
     $telAccess = mysqli_real_escape_string($conexao, $telAccess);
 
-    $sql = "SELECT * FROM filas_chamda WHERE nome_chamada = '$usuAccess' AND tel_chamada = '$telAccess'";
+    $sql = "SELECT * FROM filas_chamada WHERE nome_chamada = '$usuAccess' AND tel_chamada = '$telAccess'";
     $resultado = mysqli_query($conexao, $sql);
+
+    // Verifica se houve erro na consulta
+    if (!$resultado) {
+        echo json_encode(['status' => false, 'msg' => 'Erro na consulta: ' . mysqli_error($conexao)]);
+        exit();
+    }
 
     // Inicializa um array na sessão para armazenar os IDs das filas
     $_SESSION['filas_ids'] = [];
+    ob_start();
 ?>
 <!-- ## MONTAGEM DA TABELA ## -->
 <div class="container">
     <div class="table-title">
         <div class="row">
             <div class="col-sm d-flex align-items-center justify-content-between">
-                <h2>Criar <b>Filas</b></h2>
+                <h2>Listar <b>Filas</b></h2>
                 <a href="#" id="btnCadastro" class="open-modal btnCriar">
                     <i class='bx bxs-plus-circle'></i><span>Criar</span>
                 </a>
@@ -36,6 +44,7 @@ if (isset($_SESSION['nome_chamda']) && isset($_SESSION['tel_chamada'])) {
                 <th>Posição</th>
                 <th>Acesso</th>
                 <th>Atendido</th>
+                <th>Ações</th>
             </tr>
         </thead>
         <tbody>
@@ -50,14 +59,14 @@ if (isset($_SESSION['nome_chamda']) && isset($_SESSION['tel_chamada'])) {
                         echo "<td>" . htmlspecialchars($row["data_entrada"]) . "</td>";
                         echo "<td>" . htmlspecialchars($row["atendido"]) . "</td>";
                         echo "<td>";
-                        echo "<a href='#' class='edit' data-id='"  . htmlspecialchars($row["id_criar_fila"]) . "' onclick=\"loadContent('/Fila_Facil/system/usuario/accessFilaUsu.php?id_criar_fila=" . htmlspecialchars($row["id_criar_fila"]) . "')\">";
+                        echo "<a href='#' class='edit' data-id='"  . htmlspecialchars($row["id_chamada"]) . "' onclick=\"loadContent('/Fila_Facil/system/usuario/accessFilaUsu.php?id_chamada=" . htmlspecialchars($row["id_chamada"]) . "')\">";
                         echo "<i class='bx bxs-pencil' data-toggle='tooltip' title='Editar'></i>";
                         echo "</a>";
                         echo "</td>";
                         echo "</tr>";
 
                         // Armazenar os IDs das filas na sessão
-                        $_SESSION['filas_ids'][] = $row['id_criar_fila'];
+                        $_SESSION['filas_ids'][] = $row['id_chamada'];
                     }
                 } else {
                     // Exibir linha vazia se não houver resultados
@@ -70,9 +79,12 @@ if (isset($_SESSION['nome_chamda']) && isset($_SESSION['tel_chamada'])) {
     </table>
 </div>
 <?php
-    // Fechar a conexão com o banco de dados
-    mysqli_close($conexao);
+    $html = ob_get_clean();
+    echo json_encode(['status' => true, 'html' => $html]);
 } else {
-    echo "Usuário não está logado.";
+    echo json_encode(['status' => false, 'msg' => 'Dados do formulário não recebidos.']);
 }
+
+// Fechar a conexão com o banco de dados
+mysqli_close($conexao);
 ?>

@@ -9,10 +9,13 @@
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
 
     <!-- FontAwesome CDN-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!---Link Bootstrap--->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
     <!---Link CSS--->
     <link rel="stylesheet" href="assets/css/styles.css">
@@ -46,11 +49,13 @@
                     </div>
                     <div class="modal-body">
 
-                        <input type="email" name="email_usu" placeholder="E-mail" class="form-control" autocomplete="email" required>
+                        <input type="email" name="email_usu" placeholder="E-mail" class="form-control"
+                            autocomplete="email" required>
 
                         <div class="invalid-feedback">Por favor preencha o e.mail para acesso.</div>
 
-                        <input type="password" name="senha_usu" placeholder="Password" class="form-control" autocomplete="curent-password" required>
+                        <input type="password" name="senha_usu" placeholder="Password" class="form-control"
+                            autocomplete="curent-password" required>
 
                         <div class="invalid-feedback">Por favor preencha uma senha válida</div>
 
@@ -60,11 +65,13 @@
 
                         <div class="col-md-12">
                             <ul class="social-network social-circle">
-                                <li><a href="#" class="icoFacebook" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                                <li><a href="#" class="icoFacebook" title="Facebook"><i
+                                            class="fab fa-facebook-f"></i></a>
                                 </li>
                                 <li><a href="#" class="icoTwitter" title="Twitter"><i class="fab fa-twitter"></i></a>
                                 </li>
-                                <li><a href="#" class="icoGoogle" title="Google +"><i class="fab fa-google-plus"></i></a>
+                                <li><a href="#" class="icoGoogle" title="Google +"><i
+                                            class="fab fa-google-plus"></i></a>
                                 </li>
                             </ul>
                         </div>
@@ -98,21 +105,25 @@
                         <input type="tel" name="tel_usu" placeholder="Nome" class="form-control" required>
                         <div class="invalid-feedback">Por favor preencha o seu telefone.</div>
 
-                        <input type="email" name="email_usu" placeholder="E-mail" class="form-control" autocomplete="email" required>
+                        <input type="email" name="email_usu" placeholder="E-mail" class="form-control"
+                            autocomplete="email" required>
                         <div class="invalid-feedback">Por favor preencha o e.mail do usuário</div>
 
-                        <input type="password" name="senha_usu" placeholder="Password" class="form-control" autocomplete="curent-password" required>
+                        <input type="password" name="senha_usu" placeholder="Password" class="form-control"
+                            autocomplete="curent-password" required>
                         <div class="invalid-feedback">Por favor preencha uma senha válida</div>
 
                         <input id="btnCloseModal" type="submit" name="" value="Cadastrar" href="#">
 
                         <div class="col-md-12">
                             <ul class="social-network social-circle">
-                                <li><a href="#" class="icoFacebook" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                                <li><a href="#" class="icoFacebook" title="Facebook"><i
+                                            class="fab fa-facebook-f"></i></a>
                                 </li>
                                 <li><a href="#" class="icoTwitter" title="Twitter"><i class="fab fa-twitter"></i></a>
                                 </li>
-                                <li><a href="#" class="icoGoogle" title="Google +"><i class="fab fa-google-plus"></i></a>
+                                <li><a href="#" class="icoGoogle" title="Google +"><i
+                                            class="fab fa-google-plus"></i></a>
                                 </li>
                             </ul>
                         </div>
@@ -138,23 +149,22 @@
                         <img src="./assets/img/Screenshot_1.png" alt="">
                     </div>
                     <div class="modal-body">
-                        <input type="text" name="nome_chamda" placeholder="Nome" class="form-control" required>
+                        <input type="text" name="nome_chamada" placeholder="Nome" class="form-control" required>
                         <div class="invalid-feedback">Por favor preencha o seu nome.</div>
 
-                        <input type="tel" name="tel_chamada" placeholder="Telefone" class="form-control" required>
-
+                        <input type="tel" name="tel_chamada" placeholder="E-mail" class="form-control"
+                            autocomplete="email" required>
                         <div class="invalid-feedback">Por favor preencha o telefone para acesso.</div>
 
-                        <input id="btnClose" type="submit" value="Listar" href="#">
+                        <input id="btnListar" type="submit" value="Listar" class="btn btn-primary">
+
                     </div>
                     <div class="modal-footer">
-                        <p class="text-muted">Não acessou uma lista?
-                            <a id="cadastro" href="#!"> Acesse..</a>
+                        <p class="text-muted">Não acessou nenhuma lista?
+                            <a id="cadastro" href="#!"> Acesse!</a>
                         </p>
-
                     </div>
                 </form>
-
             </div>
         </div>
     </div>
@@ -176,14 +186,15 @@
     </footer>
 
     <!-- SCRIPS BOOTSTRAP -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
 
     <!-- SCRIPTS -->
     <script src="./assets/js/index/modal_index.js" defer></script>
     <script src="./assets/js/index/validar_cad_users.js" defer></script>
     <script src="./assets/js/index/validar_login.js" defer></script>
-    <script src="./assets/index/validar_listar_access.js" defer></script>
+    <script src="./assets/js/index/validar_listar_access.js" defer></script>
     <script src="./assets/js/content/logout.js" defer></script>
     <script src="./assets/js/content/updateAccessEdit.js" defer></script>
     <script src="./assets/js/index/loadAccess.js"></script>

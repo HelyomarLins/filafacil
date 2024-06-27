@@ -1,4 +1,4 @@
-console.log('Lista de filas do usário carregada');
+console.log('Lista de filas do usuário carregada');
 
 document.addEventListener('DOMContentLoaded', function () {
     const listAccessForm = document.getElementById('listAccessForm');
@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const dadosLogin = new FormData(listAccessForm);
 
             try {
-                const response = await fetch('http://localhost/Fila_Facil/system/filas/loistaAccessUsu.php', {
+                const response = await fetch('http://localhost/Fila_Facil/system/filas/listaAccessUsu.php', {
                     method: "POST",
                     body: dadosLogin
                 });
@@ -26,6 +26,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 const resposta = await response.json();
 
                 if (resposta.status) {
+                    loadAccessContent(resposta.html);
+                    closeModalAccess();
+
                     const Toast = Swal.mixin({
                         toast: true,
                         position: "top-end",
@@ -41,10 +44,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     Toast.fire({
                         icon: "success",
                         title: resposta.msg
-                    }).then(() => {
-                        closeModalAccess();
-                        // Redireciona para a página dash
-                        window.location.href = "./layout/dash.php";
                     });
                 } else {
                     Swal.fire({
@@ -75,6 +74,11 @@ document.addEventListener('DOMContentLoaded', function () {
         }, false);
     }
 });
+
+function loadAccessContent(html) {
+    const container = document.getElementById("dynamic-index");
+    container.innerHTML = html;
+}
 
 function closeModalAccess() {
     const modal = document.getElementById('modalListar');
