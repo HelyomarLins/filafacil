@@ -30,7 +30,7 @@ document.addEventListener('click', function (event) {
         modalId = 'modalCadastro';
     } else if (event.target.id === 'openListar') {
         console.log('Botão de listar Filas clicado');
-        modalElement = document.getElementById('modalListar');
+        modalElement = document.getElementById('modalListar'); s
         modalId = 'modalListar';
     } else if (event.target.classList.contains('btnDeleteAccess')) {
         console.log('Botão de deletar acesso clicado');

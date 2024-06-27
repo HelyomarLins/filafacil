@@ -222,6 +222,7 @@
     <script src="./assets/js/content/updateAccessEdit.js" defer></script>
     <script src="./assets/js/index/loadAccess.js"></script>
     <script src="./assets/js/index/initDynamicIndex.js" defer></script>
+    <script src="./assets/js/index/deleteAccess.js" defer></script>
 
 </body>
 
