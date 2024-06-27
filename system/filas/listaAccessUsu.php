@@ -25,30 +25,30 @@ if (isset($_POST['nome_chamada']) && isset($_POST['tel_chamada'])) {
     $_SESSION['filas_ids'] = [];
     ob_start();
 ?>
-<!-- ## MONTAGEM DA TABELA ## -->
-<div class="container">
-    <div class="table-title">
-        <div class="row">
-            <div class="col-sm d-flex align-items-center justify-content-between">
-                <h2>Listar <b>Filas</b></h2>
-                <a href="#" id="btnCadastro" class="open-modal btnCriar">
-                    <i class='bx bxs-plus-circle'></i><span>Criar</span>
-                </a>
+    <!-- ## MONTAGEM DA TABELA ## -->
+    <div class="container">
+        <div class="table-title">
+            <div class="row">
+                <div class="col-sm d-flex align-items-center justify-content-between">
+                    <h2>Listar <b>Filas</b></h2>
+                    <a href="#" id="btnCadastro" class="open-modal btnCriar">
+                        <i class='bx bxs-plus-circle'></i><span>Criar</span>
+                    </a>
+                </div>
             </div>
         </div>
-    </div>
-    <table class="table table-striped table-hover">
-        <thead>
-            <tr>
-                <th>Fila</th>
-                <th>Posição</th>
-                <th>Acesso</th>
-                <th>Atendido</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Fila</th>
+                    <th>Posição</th>
+                    <th>Acesso</th>
+                    <th>Atendido</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
                 // Verifica se há resultados
                 if (mysqli_num_rows($resultado) > 0) {
                     // Loop para exibir cada fila na tabela
@@ -75,9 +75,9 @@ if (isset($_POST['nome_chamada']) && isset($_POST['tel_chamada'])) {
                     echo "</tr>";
                 }
                 ?>
-        </tbody>
-    </table>
-</div>
+            </tbody>
+        </table>
+    </div>
 <?php
     $html = ob_get_clean();
     echo json_encode(['status' => true, 'html' => $html]);
