@@ -1,7 +1,7 @@
 <?php
 // Arquivo de conexão com o banco de dados
 session_start();
-include_once('./API/conexao.php');
+include_once('../../API/conexao.php');
 
 $erro = 0;
 if (isset($_GET['id_criar_fila'])) {
@@ -30,14 +30,16 @@ if (isset($_GET['id_criar_fila'])) {
 mysqli_close($conexao);
 ?>
 
-<!-- HTML para exibir o modal de edição -->
+<!-- HTML edição -->
 <div class="container">
-    <form id="editeFilesUser" class="form" name="form" method="POST" onsubmit="updateAccessEdit(this, '/Fila_Facil/API/edit_fila_usu.php'); return false;">
+    <form id="editeFilesUser" class="form" name="form" method="POST">
 
         <div class="modal-header">
             <h4 class="modal-title">Editar Fila</h4>
         </div>
-
+        <!--DADOS PARA EDITAR NA TABELA-->
+        <input type="hidden" name="tabela" value="criarfila">
+        <input type="hidden" id="pessoa_idUsu" name="pessoa_idUsu" value="<?php echo isset($_SESSION['id_usu']) ? $_SESSION['id_usu'] : ''; ?>">
         <!-- Dados da Fila -->
         <input type="hidden" class="form-control" id="id_criar_fila" name="id_criar_fila" value="<?php echo $id ?>">
 
@@ -77,8 +79,8 @@ mysqli_close($conexao);
         <div class="row">
             <div class="col-md-12 text-end">
                 <hr>
-                <button type="submit" class="btn btn-warning">Editar Fila</button>
-                <button type="button" class="btn btn-secondary" onclick="logout()">Voltar</button>
+                <input type="submit" class="btn btn-warning">Editar Fila</input>
+                <input type="button" class="btn btn-secondary" onclick="logout()">Voltar</input>
             </div>
         </div>
     </form>

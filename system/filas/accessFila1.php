@@ -1,7 +1,7 @@
 <?php
 // Arquivo de CONEXAO
 session_start();
-include_once('../../API/conexao.php');;
+include_once('../../API/conexao.php');
 
 $erro = 0;
 if (isset($_GET['id_criar_fila'])) {
@@ -80,7 +80,7 @@ if (isset($_GET['id_criar_fila'])) {
         <div class="row">
             <div class="col-md-6 text-end">
                 <hr>
-                <button type="submit" class="btn btn-warning">Acessar Fila</button>
+                <input type="submit" class="btn btn-warning">Editar Fila</input>
 
                 <button onclick="logout()" type="submit" class="btn btn-secondary">Voltar</button>
 

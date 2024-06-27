@@ -9,6 +9,7 @@ function createUpdateFiles(form, urlAPI) {
 
     // Cria um objeto FormData com os dados do formulário
     const dadosFormulario = new FormData(form);
+    console.log(editForm);
 
     fetch(urlAPI, {
         method: "POST",
@@ -91,6 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (createForm) {
         createForm.addEventListener('submit', function (e) {
             e.preventDefault();
+            console.log('Botão de criar clicado!');
             createUpdateFiles(this, '/Fila_Facil/API/access_1.php');
         });
     }
@@ -98,6 +100,9 @@ document.addEventListener("DOMContentLoaded", () => {
     if (editForm) {
         editForm.addEventListener('submit', function (e) {
             e.preventDefault();
+            console.log('Botão de editar clicado!');
+            console.log('Formulário de edição:', editForm);  // Verifique se o formulário foi encontrado
+            console.log('Botão de submit:', editForm.querySelector('input[type="submit"]'));
             createUpdateFiles(this, '/Fila_Facil/API/access_1.php');
         });
     }

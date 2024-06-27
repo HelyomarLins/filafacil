@@ -1,6 +1,7 @@
 console.log('loadContent carregada');
 function loadContent(url) {
     var container = document.getElementById("dynamic-content");
+    console.log('loadContent chamada com URL:', url); // Adicione esse log
     console.log(container);
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
