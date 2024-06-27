@@ -7,12 +7,8 @@ let modalUtils = {
         const modalElement = document.querySelector(`#${modalId}`);
 
         if (modalElement) {
-            // Pega a instância do modal que foi criada na função openModal
             const modalInstance = modalUtils.modais[modalId];
-
-            // Verifica se modalInstance ainda é válido
             if (modalInstance) {
-                // Fecha e remove o modal do DOM
                 modalInstance.hide();
             } else {
                 console.error('Modal instance not found.');
@@ -33,6 +29,9 @@ document.getElementById('openLogin').addEventListener('click', function (event) 
     } else if (event.target.id === 'openCadastro') {
         modalElement = document.getElementById('modalCadastro');
         modalId = 'modalCadastro';
+    } else if (event.target.id === 'openListar') {
+        modalElement = document.getElementById('modalListar');
+        modalId = 'modalListar';
     }
 
     if (modalElement) {
@@ -49,17 +48,29 @@ document.getElementById('openLogin').addEventListener('click', function (event) 
 
 // Método para fechar o modal de acesso ao clicar em "Cadastre-se" e abrir o modal de cadastro
 document.getElementById('cadastro').addEventListener('click', function () {
-    // Fecha o modal de acesso se estiver aberto
     if (modalUtils.modais['modalAcesso']) {
         modalUtils.closeModal('modalAcesso');
     }
-    // Abre o modal de cadastro
+
     let modalCadastro = document.getElementById('modalCadastro');
     let myModal = modalUtils.modais['modalCadastro'];
 
     if (!myModal) {
         myModal = new bootstrap.Modal(modalCadastro);
         modalUtils.modais['modalCadastro'] = myModal;
+    }
+
+    myModal.show();
+});
+
+// Adicionando evento de clique para abrir o modal de Listar Filas
+document.getElementById('openListar').addEventListener('click', function () {
+    let modalElement = document.getElementById('modalListar');
+    let myModal = modalUtils.modais['modalListar'];
+
+    if (!myModal) {
+        myModal = new bootstrap.Modal(modalElement);
+        modalUtils.modais['modalListar'] = myModal;
     }
 
     myModal.show();
