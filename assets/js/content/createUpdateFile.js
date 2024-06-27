@@ -1,4 +1,3 @@
-/* == CRIAR FILAS == */
 console.log('Função createUpdateFiles carregada');
 
 function createUpdateFiles(form, urlAPI) {
@@ -9,7 +8,7 @@ function createUpdateFiles(form, urlAPI) {
 
     // Cria um objeto FormData com os dados do formulário
     const dadosFormulario = new FormData(form);
-    console.log(editForm);
+    console.log('Dados do formulário:', ...dadosFormulario.entries());
 
     fetch(urlAPI, {
         method: "POST",
@@ -18,7 +17,6 @@ function createUpdateFiles(form, urlAPI) {
         .then(response => {
             console.log('Resposta completa da API:', response);
             if (response.ok) {
-                // Converte a resposta da API (JSON) para um objeto JavaScript
                 return response.json();
             } else {
                 return response.json().then(errorData => {
@@ -29,7 +27,6 @@ function createUpdateFiles(form, urlAPI) {
         .then(resposta => {
             console.log('Resposta da API (JSON):', resposta);
 
-            // Cria uma instância do SweetAlert2 para exibir notificações
             const Toast = Swal.mixin({
                 toast: true,
                 position: "top-end",
@@ -42,26 +39,23 @@ function createUpdateFiles(form, urlAPI) {
                 }
             });
 
-            // Exibe a notificação de sucesso
             Toast.fire({
                 icon: resposta.icon || "success",
                 title: resposta.message
             }).then(() => {
                 if (resposta.redirect) {
-                    closeModalCad(); // Fecha o modal de cadastro
-                    loadContent(resposta.redirect); // Carrega o conteúdo da URL especificada
+                    closeModalCad();
+                    loadContent(resposta.redirect);
                 } else {
                     console.warn('A resposta da API não contém um redirecionamento.');
                 }
             });
 
-            // Limpa o formulário após o cadastro bem-sucedido
             form.reset();
         })
         .catch(error => {
             console.error('Erro na requisição:', error);
 
-            // Exibe um alerta de erro com a mensagem definida
             Swal.fire({
                 text: error.message,
                 icon: "error",
@@ -69,42 +63,20 @@ function createUpdateFiles(form, urlAPI) {
             });
         })
         .finally(() => {
-            // Garante que o botão de submit seja reativado após o processamento
             form.querySelector('input[type="submit"]').disabled = false;
         });
 }
 
-// Função para fechar o modal e limpar o formulário
-function closeModalCad() {
-    const modais = document.querySelectorAll('.modal.fade');
-    modais.forEach(modal => {
-        const modalInstance = bootstrap.Modal.getInstance(modal);
-        if (modalInstance) {
-            modalInstance.hide();
-        }
-    });
-}
-
 document.addEventListener("DOMContentLoaded", () => {
-    const createForm = document.querySelector("#createFilesUser");
-    const editForm = document.querySelector("#editFilesUser");
+    console.log("JavaScript carregado!");
 
-    if (createForm) {
-        createForm.addEventListener('submit', function (e) {
-            e.preventDefault();
-            console.log('Botão de criar clicado!');
-            createUpdateFiles(this, '/Fila_Facil/API/access_1.php');
-        });
-    }
+    const editForm = document.querySelector("#accessFila1Form");
 
     if (editForm) {
         editForm.addEventListener('submit', function (e) {
             e.preventDefault();
             console.log('Botão de editar clicado!');
-            console.log('Formulário de edição:', editForm);  // Verifique se o formulário foi encontrado
-            console.log('Botão de submit:', editForm.querySelector('input[type="submit"]'));
             createUpdateFiles(this, '/Fila_Facil/API/access_1.php');
         });
     }
 });
-

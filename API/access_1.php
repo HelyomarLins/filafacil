@@ -16,16 +16,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         // Limpar e obter variáveis
         $tabela = clear_input($conexao, $_POST['tabela']);
-
-        // Verificar se os campos existem antes de acessá-los
-        $idCampo = isset($_POST['idCampo']) ? clear_input($conexao, $_POST['idCampo']) : null;
-        $idValor = isset($_POST['id_usu']) ? clear_input($conexao, $_POST['id_usu']) : null;
+        $id_criar_fila = isset($_POST['id_criar_fila']) ? clear_input($conexao, $_POST['id_criar_fila']) : null;
 
         // Remover variáveis do $_POST que não são campos de dados
-        unset($_POST['tabela'], $_POST['idCampo'], $_POST['id_usu']);
+        unset($_POST['tabela'], $_POST['id_criar_fila']);
 
         // Verificar se é uma operação de criação (INSERT) ou edição (UPDATE)
-        $isUpdate = !empty($idValor); // Verifica se há um ID para determinar se é um UPDATE
+        $isUpdate = !empty($id_criar_fila); // Verifica se há um ID para determinar se é um UPDATE
 
         if ($isUpdate) {
             // Se for uma atualização, montar um UPDATE
@@ -39,7 +36,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
 
             $sql .= implode(", ", $campos);
-            $sql .= " WHERE $idCampo = ?";
+            $sql .= " WHERE id_criar_fila = ?";
+
+            // Preparar a declaração SQL
+            $stmt = $conexao->prepare($sql);
+            if ($stmt === false) {
+                throw new Exception('Erro ao preparar a declaração: ' . $conexao->error);
+            }
+
+            // Vincular os parâmetros da query preparada
+            $paramTypes = str_repeat('s', count($campos)) . 'i';
+            $paramValues = array_values($_POST);
+            $paramValues[] = $id_criar_fila;
+            $stmt->bind_param($paramTypes, ...$paramValues);
+
+            // Executar a query SQL preparada
+            if ($stmt->execute()) {
+                $response = [
+                    'redirect' => '/Fila_Facil/system/usuario/listarFilasUsu.php',
+                    'message' => 'Fila editada com sucesso',
+                    'icon' => 'success'
+                ];
+            } else {
+                $response = [
+                    'message' => 'Erro ao editar a fila. Tente novamente',
+                    'icon' => 'error'
+                ];
+            }
+
+            $stmt->close();
         } else {
             // Caso contrário, é uma operação de criação (INSERT)
             $codAccess = clear_input($conexao, $_POST['cod_acess_fila']);

@@ -32,7 +32,8 @@ mysqli_close($conexao);
 
 <!-- HTML edição -->
 <div class="container">
-    <form id="editeFilesUser" class="form" name="form" method="POST">
+    <form id="createFilesUser" class="form" name="form" method="POST" onsubmit="createUpdateFiles(this, '/Fila_Facil/API/access_1.php'); return false;">
+
 
         <div class="modal-header">
             <h4 class="modal-title">Editar Fila</h4>
