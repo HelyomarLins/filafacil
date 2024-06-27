@@ -17,7 +17,7 @@
 
     <script>
         async function fetchChamadas() {
-            const response = await fetch('/Fila_Facil/get_chamadas.php');
+            const response = await fetch('/Fila_Facil/API/function/get_chamadas.php');
             const chamadas = await response.json();
             const chamadasList = document.getElementById('chamadas-list');
             chamadasList.innerHTML = '';
@@ -72,7 +72,7 @@
             formData.append('id_chamada', id_chamada);
             formData.append('atendido', atendido);
 
-            await fetch('/Fila_Facil/update_atendimento.php', {
+            await fetch('/Fila_Facil/API/function/update_atendimento.php', {
                 method: 'POST',
                 body: formData
             });

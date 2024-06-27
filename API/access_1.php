@@ -71,6 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $nome = clear_input($conexao, $_POST['nome_fila']);
             $qtd_fila = clear_input($conexao, $_POST['qtd_fila']);
             $pessoa_idUsu = clear_input($conexao, $_POST['pessoa_idUsu']);
+            $posicao_fila = isset($_POST['posicao_fila']) ? clear_input($conexao, $_POST['posicao_fila']) : null;
 
             // Verificar se já existe uma fila com o mesmo código de acesso ou nome
             $exists = verifyFiles($codAccess, $nome); // Verifica se o nome ou o código de acesso já existem
@@ -87,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $codAccessHashed = criarHash($codAccess);
 
                 // Preparar a query de INSERT
-                $sql = "INSERT INTO $tabela (pessoa_idUsu, nome_fila, qtd_fila, cod_acess_fila) VALUES (?, ?, ?, ?)";
+                $sql = "INSERT INTO $tabela (pessoa_idUsu, nome_fila, qtd_fila, cod_acess_fila, posicao_fila) VALUES (?, ?, ?, ?, ?)";
 
                 // Preparar a declaração SQL
                 $stmt = $conexao->prepare($sql);
@@ -96,7 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
 
                 // Vincular os parâmetros da query preparada
-                $stmt->bind_param("isss", $pessoa_idUsu, $nome, $qtd_fila, $codAccessHashed);
+                $stmt->bind_param("issss", $pessoa_idUsu, $nome, $qtd_fila, $codAccessHashed, $posicao_fila);
 
                 // Executar a query SQL preparada
                 if ($stmt->execute()) {

@@ -35,7 +35,8 @@
     <div class="modal fade" id="modalCriarFila" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form method="POST" id="createFilesUser" class="needs-validation box" novalidate>
+                <form method="POST" id="createFilesUser" class="needs-validation box"
+                    onsubmit="createUpdateFiles(this, '/Fila_Facil/API/access_1.php'); return false;" novalidate>
                     <div class="modal-header">
                         <img src="./assets/img/Screenshot_4.png" alt="">
                     </div>

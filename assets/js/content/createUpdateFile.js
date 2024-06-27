@@ -67,16 +67,21 @@ function createUpdateFiles(form, urlAPI) {
         });
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    console.log("JavaScript carregado!");
+// Função para fechar o modal e limpar o formulário
+function closeModalCad() {
+    const modais = document.querySelectorAll('.modal.fade');
+    modais.forEach(modal => {
+        const modalInstance = bootstrap.Modal.getInstance(modal);
+        if (modalInstance) {
+            modalInstance.hide();
+        }
+    });
+}
 
-    const editForm = document.querySelector("#accessFila1Form");
-
-    if (editForm) {
-        editForm.addEventListener('submit', function (e) {
-            e.preventDefault();
-            console.log('Botão de editar clicado!');
-            createUpdateFiles(this, '/Fila_Facil/API/access_1.php');
-        });
+// Chama a função para iniciar a validação **APENAS DENTRO DO DOMContentLoaded**
+document.addEventListener('DOMContentLoaded', function () {
+    const cadUsuarioForm = document.getElementById('cadForm');
+    if (cadUsuarioForm) {
+        // Aqui você pode adicionar a validação do formulário se necessário
     }
 });
