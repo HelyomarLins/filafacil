@@ -169,6 +169,29 @@
         </div>
     </div>
 
+    <!-- Delete Modal HTML -->
+    <div class="modal fade" id="modalDeletar" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form>
+                    <div class="modal-header">
+                        <img src="./assets/img/Screenshot_1.png" alt="">
+                    </div>
+                    <div class="modal-body">
+                        <p class="text-delete">Tem certeza que deseja sair da fila?</p>
+                        <p><span class="nome-delete"></span></p>
+                        <p class="text-warning"><small>Esta ação não pode ser desfeita.</small></p>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="button" class="btn btn-default" value="Cancel">
+                        <input onclick="deleteAccess('/Fila_Facil1/API/function/delete_acces_file.php','id_chamada')"
+                            class="btn btn-danger" value="Delete">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 
     <!-- Seção de Footer/Rodapé -->
     <footer class="footer_index">
@@ -198,6 +221,7 @@
     <script src="./assets/js/content/logout.js" defer></script>
     <script src="./assets/js/content/updateAccessEdit.js" defer></script>
     <script src="./assets/js/index/loadAccess.js"></script>
+    <script src="./assets/js/index/initDynamicIndex.js" defer></script>
 
 </body>
 

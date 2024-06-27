@@ -1,0 +1,5 @@
+// initDynamicIndex.js
+function initDynamicIndex() {
+
+
+}

@@ -59,8 +59,9 @@ if (isset($_POST['nome_chamada']) && isset($_POST['tel_chamada'])) {
                         echo "<td>" . htmlspecialchars($row["data_entrada"]) . "</td>";
                         echo "<td>" . htmlspecialchars($row["atendido"]) . "</td>";
                         echo "<td>";
-                        echo "<a href='#' class='edit' data-id='"  . htmlspecialchars($row["id_chamada"]) . "' onclick=\"loadContent('/Fila_Facil/system/usuario/accessFilaUsu.php?id_chamada=" . htmlspecialchars($row["id_chamada"]) . "')\">";
-                        echo "<i class='bx bxs-pencil' data-toggle='tooltip' title='Editar'></i>";
+
+                        echo "<a href='#' class='delete open-modal btnDeleteAccess' data-id='" . $row["id_chamada"] . "' data-nome='" . $row["nome_fila_chamada"] . "'>";
+                        echo "<i class='bx bxs-trash-alt' data-toggle='tooltip' title='Deletar'></i>";
                         echo "</a>";
                         echo "</td>";
                         echo "</tr>";

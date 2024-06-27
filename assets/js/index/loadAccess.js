@@ -9,9 +9,9 @@ function loadAccess(url) {
             // Insere o novo conteúdo
             container.innerHTML = this.responseText;
 
-
+            // Chama a função de inicialização
+            initDynamicIndex();
         }
-
     };
     xhttp.open("GET", url, true);
     xhttp.send();

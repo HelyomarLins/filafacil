@@ -1,11 +1,8 @@
-console.log('Modal index carregada');
-
-// Criando um objeto para as funções de modal
+// Objeto para gerenciar os modais
 let modalUtils = {
     modais: {},
     closeModal: function (modalId) {
         const modalElement = document.querySelector(`#${modalId}`);
-
         if (modalElement) {
             const modalInstance = modalUtils.modais[modalId];
             if (modalInstance) {
@@ -19,19 +16,26 @@ let modalUtils = {
     }
 };
 
-// Método para abrir os modais
-document.getElementById('openLogin').addEventListener('click', function (event) {
+// Evento de clique para abrir os modais
+document.addEventListener('click', function (event) {
     let modalElement, modalId;
 
     if (event.target.id === 'openLogin') {
+        console.log('Botão de abrir Login clicado');
         modalElement = document.getElementById('modalAcesso');
         modalId = 'modalAcesso';
     } else if (event.target.id === 'openCadastro') {
+        console.log('Botão de abrir Cadastro clicado');
         modalElement = document.getElementById('modalCadastro');
         modalId = 'modalCadastro';
     } else if (event.target.id === 'openListar') {
+        console.log('Botão de listar Filas clicado');
         modalElement = document.getElementById('modalListar');
         modalId = 'modalListar';
+    } else if (event.target.classList.contains('btnDeleteAccess')) {
+        console.log('Botão de deletar acesso clicado');
+        modalElement = document.getElementById('modalDeletar');
+        modalId = 'modalDeletar';
     }
 
     if (modalElement) {
